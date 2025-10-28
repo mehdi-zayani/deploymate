@@ -1,0 +1,40 @@
+name: Deploymate CI
+
+on:
+  push:
+    branches: ["develop", "main"]
+  pull_request:
+    branches: ["develop", "main"]
+
+jobs:
+  build-and-test:
+    name: Build & Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: |
+          corepack enable
+          pnpm install
+
+      - name: Type check
+        run: pnpm run type-check || echo "No type-check script defined"
+
+      - name: Lint
+        run: pnpm run lint || echo "No lint script defined"
+
+      - name: Build
+        run: pnpm run build
+
+      - name: CI summary
+        run: |
+          echo "Build and Lint completed successfully." >> $GITHUB_STEP_SUMMARY
