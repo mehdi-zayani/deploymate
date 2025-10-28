@@ -1,15 +1,10 @@
-import "../styles/globals.css";
+import "./../styles/globals.css";
 import { ReactNode } from "react";
-
-export const metadata = {
-  title: "DeployMate",
-  description: "Automate and visualize your Git CI/CD workflows easily.",
-};
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className="min-h-screen flex flex-col items-center justify-center">
+    <html lang="en">
+      <body className="bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
         {children}
       </body>
     </html>
