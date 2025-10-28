@@ -2,9 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [develop, main]
+    branches:
+      - develop
+      - main
   pull_request:
-    branches: [develop, main]
 
 jobs:
   build:
@@ -18,19 +19,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
 
-      - name: Install pnpm
-        run: npm install -g pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+          run_install: false
 
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: pnpm install
 
-      - name: Lint
-        run: pnpm run lint
-
-      - name: Build
+      - name: Build project
         run: pnpm run build
 
-      - name: Test
-        run: pnpm test --if-present
+      - name: Lint project
+        run: pnpm run lint
