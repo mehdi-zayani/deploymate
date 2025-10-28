@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import type { NextAuthOptions } from "next-auth";
 
-//  Next.js 16 requires not exporting config objects directly.
+// Next.js 16 requires not exporting config objects directly.
 // Everything must be encapsulated and only the handler is exported.
 const authOptions: NextAuthOptions = {
   providers: [
@@ -32,6 +32,9 @@ const authOptions: NextAuthOptions = {
     signIn: "/", // Redirect users to home page for sign-in
   },
 };
+
+// ✅ Ajoute cette ligne :
+export { authOptions };
 
 // Create the NextAuth handler using the config above
 const handler = NextAuth(authOptions);
