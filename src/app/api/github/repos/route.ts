@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/options"; 
 
 export async function GET() {
   const session = await getServerSession(authOptions);
 
-  if (!session || !session.accessToken) {
+  if (!session || !(session as any).accessToken) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   const response = await fetch("https://api.github.com/user/repos?per_page=10", {
     headers: {
-      Authorization: `token ${session.accessToken}`,
+      Authorization: `token ${(session as any).accessToken}`,
       Accept: "application/vnd.github+json",
     },
     next: { revalidate: 60 },
