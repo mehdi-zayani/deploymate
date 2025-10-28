@@ -2,11 +2,12 @@
 
 import { useSession, signIn } from "next-auth/react";
 import DashboardCard from "./components/DashboardCards";
+import RepositoriesCard from "./components/RepositoriesCard";
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
 
-  // ⏳ État de chargement
+  // --- Loading state ---
   if (status === "loading") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-neutral-950 text-neutral-600 dark:text-neutral-300">
@@ -16,7 +17,7 @@ export default function DashboardPage() {
     );
   }
 
-  // ❌ Non authentifié → afficher un message
+  // --- Unauthenticated state ---
   if (!session) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-neutral-950 text-center">
@@ -36,22 +37,25 @@ export default function DashboardPage() {
     );
   }
 
-  // ✅ Authentifié → afficher le dashboard
+  // --- Authenticated state ---
   return (
     <main className="min-h-screen bg-white dark:bg-neutral-950 p-8">
-      <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white mb-6">
+      <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white mb-8">
         Welcome, {session.user?.name || "User"} 👋
       </h1>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {/* Une seule colonne : chaque section sur sa propre ligne */}
+      <div className="flex flex-col gap-8">
+        {/* Deployments */}
         <DashboardCard
           title="Deployments"
           description="Monitor your latest deployments in real-time."
         />
-        <DashboardCard
-          title="Repositories"
-          description="Manage your connected GitHub repositories."
-        />
+
+        {/* Repositories */}
+        <RepositoriesCard />
+
+        {/* Settings */}
         <DashboardCard
           title="Settings"
           description="Adjust your workspace and environment preferences."
