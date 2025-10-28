@@ -6,7 +6,7 @@ import DashboardCard from "./components/DashboardCards";
 export default function DashboardPage() {
   const { data: session, status } = useSession();
 
-  // ⏳ État de chargement
+  // loading state
   if (status === "loading") {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-neutral-950 text-neutral-600 dark:text-neutral-300">
@@ -16,7 +16,7 @@ export default function DashboardPage() {
     );
   }
 
-  // ❌ Non authentifié → afficher un message
+  // unauthenticated state + message
   if (!session) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-white dark:bg-neutral-950 text-center">
@@ -36,7 +36,7 @@ export default function DashboardPage() {
     );
   }
 
-  // ✅ Authentifié → afficher le dashboard
+
   return (
     <main className="min-h-screen bg-white dark:bg-neutral-950 p-8">
       <h1 className="text-2xl font-semibold text-neutral-900 dark:text-white mb-6">
