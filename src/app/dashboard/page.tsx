@@ -3,6 +3,7 @@
 import { useSession, signIn } from "next-auth/react";
 import DashboardCard from "./components/DashboardCards";
 import RepositoriesCard from "./components/RepositoriesCard";
+import DeploymentsCard from "./components/DeploymentsCard"; // added
 
 export default function DashboardPage() {
   const { data: session, status } = useSession();
@@ -44,16 +45,13 @@ export default function DashboardPage() {
         Welcome, {session.user?.name || "User"} 👋
       </h1>
 
-      {/* Une seule colonne : chaque section sur sa propre ligne */}
+      {/* Single-column layout: one section per line */}
       <div className="flex flex-col gap-8">
-        {/* Deployments */}
-        <DashboardCard
-          title="Deployments"
-          description="Monitor your latest deployments in real-time."
-        />
-
-        {/* Repositories */}
+        {/* GitHub Repositories */}
         <RepositoriesCard />
+
+        {/* GitHub Deployments */}
+        <DeploymentsCard />
 
         {/* Settings */}
         <DashboardCard
